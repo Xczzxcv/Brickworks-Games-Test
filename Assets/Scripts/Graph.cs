@@ -17,18 +17,33 @@ public class Graph<TNodeContent> where TNodeContent : IEquatable<TNodeContent>
             Content = content;
             Edges = new List<Edge>();
         }
+
+        public static bool operator==(Node fst, Node snd)
+        {
+            return fst.Content.Equals(snd.Content);
+        }
+
+        public static bool operator !=(Node fst, Node snd)
+        {
+            return !(fst == snd);
+        }
     }
 
     public readonly struct Edge
     {
         public readonly Node Src;
-        public readonly Node Dst;
+        public readonly Node Dest;
 
-        public Edge(Node src, Node dst)
+        public Edge(Node src, Node dest)
         {
             Src = src;
-            Dst = dst;
+            Dest = dest;
         }
+    }
+    
+    public struct Path
+    {
+        public List<Node> Nodes;
     }
 
     public Node Head;
@@ -60,7 +75,7 @@ public class Graph<TNodeContent> where TNodeContent : IEquatable<TNodeContent>
 
         foreach (var edge in parentNode.Edges)
         {
-            var result = FindNode(nodeContent, edge.Dst);
+            var result = FindNode(nodeContent, edge.Dest);
             if (result.HasValue)
             {
                 return result;
@@ -121,6 +136,53 @@ public class Graph<TNodeContent> where TNodeContent : IEquatable<TNodeContent>
         src.Edges.Add(new Edge(src, dest));
     }
 
+    public bool HasPath(TNodeContent srcNodeContent, TNodeContent destNodeContent,
+        List<TNodeContent> forbiddenNodesContent)
+    {
+        if (!TryGetNode(srcNodeContent, out var srcNode)
+            || !TryGetNode(destNodeContent, out var destNode))
+        {
+            Debug.LogError($"Can't find node {srcNodeContent} or {destNodeContent}");
+            return false;
+        }
+
+        var forbiddenNodes = new HashSet<Node>();
+        foreach (var forbiddenNodeContent in forbiddenNodesContent)
+        {
+            if (!TryGetNode(forbiddenNodeContent, out var forbiddenNode))
+            {
+                Debug.LogError($"Can't find node {forbiddenNodeContent}");
+                continue;
+            }
+
+            forbiddenNodes.Add(forbiddenNode);
+        }
+
+        var searchQueue = new Queue<Node>();
+        searchQueue.Enqueue(srcNode);
+
+        while (searchQueue.Count > 0)
+        {
+            var nodeToCheck = searchQueue.Dequeue();
+            if (forbiddenNodes.Contains(nodeToCheck))
+            {
+                continue;
+            }
+
+            foreach (var nodeEdge in nodeToCheck.Edges)
+            {
+                searchQueue.Enqueue(nodeEdge.Dest);
+            }
+
+            if (nodeToCheck == destNode)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public override string ToString()
     {
         return NodeToString(Head);
@@ -138,7 +200,7 @@ public class Graph<TNodeContent> where TNodeContent : IEquatable<TNodeContent>
 
             foreach (var edge in node.Edges)
             {
-                result += NodeToString(edge.Dst, depth + 1);
+                result += NodeToString(edge.Dest, depth + 1);
             }
 
             return result;

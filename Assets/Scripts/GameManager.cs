@@ -1,5 +1,6 @@
 using System;
 using Player;
+using Player.Skills;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -42,6 +43,16 @@ public class GameManager : MonoBehaviour
 
         Debug.Log(graph);
         Init();
+        Debug.Log($"{Player.SkillsManager.SkillPoints}");
+        Player.SkillsManager.AddSkillPoints(10);
+        Debug.Log($"{Player.SkillsManager.SkillPoints}");
+
+        Debug.Log($"{Player.SkillsManager.CanLearnSkill(JumpPlayerSkillConfig.ID)}");
+        Debug.Log($"{Player.SkillsManager.CanLearnSkill(FlyPlayerSkillConfig.ID)}");
+        Player.SkillsManager.LearnSkill(JumpPlayerSkillConfig.ID);
+
+        Debug.Log($"{Player.SkillsManager.CanLearnSkill(JumpPlayerSkillConfig.ID)}");
+        Debug.Log($"{Player.SkillsManager.CanLearnSkill(FlyPlayerSkillConfig.ID)}");
     }
 
     public void Init()

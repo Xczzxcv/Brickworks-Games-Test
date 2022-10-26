@@ -9,4 +9,10 @@ public interface IPlayerSkill : IEquatable<IPlayerSkill>
 
     void Use();
 }
+
+public class PlayerSkillView
+{
+    public string Name;
+    
+}
 }

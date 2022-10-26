@@ -27,7 +27,7 @@ public class Graph_OLD<TContent>
     public struct GraphEdge
     {
         public GraphNode Src;
-        public GraphNode Dst;
+        public GraphNode Dest;
     }
 
     public IReadOnlyList<GraphNode> Nodes => _nodes;

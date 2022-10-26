@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Data;
+using Player.Skills;
 
 public class DataManager
 {
@@ -11,7 +12,13 @@ public class DataManager
         {
             SkillsData = new PlayerSkillsData
             {
-                Skills = new Dictionary<string, PlayerSkillData>(),
+                Skills = new Dictionary<string, PlayerSkillData>
+                {
+                    {
+                        BasePlayerSkillConfig.ID,
+                        new PlayerSkillData {Id = BasePlayerSkillConfig.ID, IsLearned = true}
+                    },
+                },
                 SkillPoints = 5
             }
         };
