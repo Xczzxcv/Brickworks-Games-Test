@@ -9,9 +9,6 @@ public static partial class DataFactory
     private static readonly Dictionary<Type, Dictionary<string, Type>> Types 
         = new Dictionary<Type, Dictionary<string, Type>>();
     
-    private static readonly Dictionary<Type, Dictionary<Type, string>> TypesInversed 
-        = new Dictionary<Type, Dictionary<Type, string>>();
-    
     static DataFactory()
     {
         AddPlayerSkills();
@@ -30,13 +27,9 @@ public static partial class DataFactory
         {
             dataTypesDict = new Dictionary<string, Type>();
             Types.Add(baseType, dataTypesDict);
-            TypesInversed.Add(baseType, new Dictionary<Type, string>());
         }
 
         dataTypesDict.Add(typeName, type);
-        Debug.Assert(!TypesInversed[baseType].ContainsKey(type), 
-            $"[{nameof(DataFactory)}] One entity type — one config type");
-        TypesInversed[baseType].Add(type, typeName);
     }
 
     public static Type GetType(Type baseType, string typeName)

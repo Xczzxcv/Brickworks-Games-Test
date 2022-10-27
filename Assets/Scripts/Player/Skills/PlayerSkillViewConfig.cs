@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Player.Skills
 {
+[Serializable]
 public class PlayerSkillViewConfig
 {
     public string SkillId;

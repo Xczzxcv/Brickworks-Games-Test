@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Data;
 using Factory;
-using Graph_Linked;
 using Player.Skills;
 using UnityEngine;
 
@@ -12,14 +10,12 @@ public class PlayerSkillsManager
 {
     public int SkillPoints => _data.SkillPoints;
 
-    private readonly Graph<IPlayerSkill> _graph;
     private readonly Configs<PlayerSkillConfig> _playerSkillConfigs;
     private readonly Dictionary<string, IPlayerSkill> _skills = new Dictionary<string, IPlayerSkill>();
     private PlayerSkillsData _data;
 
     public PlayerSkillsManager(Configs<PlayerSkillConfig> playerSkillConfigs)
     {
-        _graph = new Graph<IPlayerSkill>();
         _playerSkillConfigs = playerSkillConfigs;
     }
 
@@ -41,43 +37,6 @@ public class PlayerSkillsManager
 
             var playerSkill = EntitiesFactory.BuildPlayerSkill(playerSkillConfig, playerSkillData);
             _skills.Add(playerSkillConfig.Id, playerSkill);
-        }
-
-        var basePlayerSkill = _skills[BasePlayerSkillConfig.ID];
-        _graph.Init(basePlayerSkill);
-        
-        var addingQueue = new Queue<IPlayerSkill>();
-        EnqueueChildren(basePlayerSkill, addingQueue);
-
-        var parentNodesContent = new List<IPlayerSkill>();
-        while (addingQueue.Count > 0)
-        {
-            var skillToAdd = addingQueue.Dequeue();
-            EnqueueChildren(skillToAdd, addingQueue);
-
-            parentNodesContent.Clear();
-            foreach (var parentSkillId in skillToAdd.BaseConfig.Parents)
-            {
-                var parentSkill = _skills[parentSkillId];
-                parentNodesContent.Add(parentSkill);                
-            }
-
-            var newNode = _graph.TryAddNode(parentNodesContent, skillToAdd);
-            if (newNode == null)
-            {
-                throw new ArgumentException($"{skillToAdd.BaseConfig.Id}");
-            }
-        }
-        
-        Debug.Log($"[test113] {_graph}");
-    }
-
-    private void EnqueueChildren(IPlayerSkill playerSkill, Queue<IPlayerSkill> addingQueue)
-    {
-        foreach (var childSkillId in playerSkill.BaseConfig.Children)
-        {
-            var childSkill = _skills[childSkillId];
-            addingQueue.Enqueue(childSkill);
         }
     }
 
@@ -110,19 +69,20 @@ public class PlayerSkillsManager
             return false;
         }
 
-        if (skill.BaseConfig.LearningCost > SkillPoints)
+        var haveEnoughPoints = skill.BaseConfig.LearningCost > SkillPoints;
+        if (haveEnoughPoints)
         {
             return false;
         }
 
-        foreach (var parentSkillId in skill.BaseConfig.Parents)
+        foreach (var neighbourSkillId in skill.BaseConfig.Neighbours)
         {
-            if (!TryGetSkill(parentSkillId, out var parentSkill))
+            if (!TryGetSkill(neighbourSkillId, out var neighbourSkill))
             {
                 continue;
             }
 
-            if (!parentSkill.IsLearned)
+            if (!neighbourSkill.IsLearned)
             {
                 continue;
             }
@@ -158,7 +118,12 @@ public class PlayerSkillsManager
             return false;
         }
 
-        foreach (var childSkillId in skill.BaseConfig.Children)
+        if (skill.BaseConfig.Id == BasePlayerSkillConfig.ID)
+        {
+            return false;
+        }
+
+        foreach (var childSkillId in skill.BaseConfig.Neighbours)
         {
             if (!TryGetSkill(childSkillId, out var childSkill))
             {
@@ -180,7 +145,7 @@ public class PlayerSkillsManager
         return true;
     }
 
-    public bool IsConnectedToParent(string skillId, string targetParentSkillId, string forbiddenSkillId = "")
+    public bool IsConnectedToParent(string skillId, string targetSkillId, string forbiddenSkillId = "")
     {
         var searchQueue = new Queue<string>();
         searchQueue.Enqueue(skillId);
@@ -194,7 +159,7 @@ public class PlayerSkillsManager
                 continue;
             }
 
-            if (skillIdToCheck == targetParentSkillId)
+            if (skillIdToCheck == targetSkillId)
             {
                 return true;
             }
@@ -209,9 +174,9 @@ public class PlayerSkillsManager
                 continue;
             }
 
-            foreach (var parentSkillId in skillToCheck.BaseConfig.Parents)
+            foreach (var neighbourSkillId in skillToCheck.BaseConfig.Neighbours)
             {
-                searchQueue.Enqueue(parentSkillId);
+                searchQueue.Enqueue(neighbourSkillId);
             }
         }
 
@@ -238,12 +203,17 @@ public class PlayerSkillsManager
 
     public void AddSkillPoints(int increaseAmount)
     {
-        _data.SkillPoints += increaseAmount;
+        UpdateSkillPoints(SkillPoints + increaseAmount);
     }
 
     public void DeductSkillPoints(int decreaseAmount)
     {
-        _data.SkillPoints -= decreaseAmount;
+        UpdateSkillPoints(SkillPoints - decreaseAmount);
+    }
+
+    private void UpdateSkillPoints(int newAmount)
+    {
+        _data.SkillPoints = newAmount;
     }
 }
 }
