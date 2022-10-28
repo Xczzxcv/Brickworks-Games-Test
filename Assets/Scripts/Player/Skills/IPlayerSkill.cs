@@ -4,8 +4,9 @@ namespace Player.Skills
 {
 public interface IPlayerSkill : IEquatable<IPlayerSkill>
 {
-    public bool IsLearned { get; }
-    public PlayerSkillConfig BaseConfig { get; }
+    string Id { get; }
+    bool IsLearned { get; }
+    PlayerSkillConfig BaseConfig { get; }
 
     void Use();
 }

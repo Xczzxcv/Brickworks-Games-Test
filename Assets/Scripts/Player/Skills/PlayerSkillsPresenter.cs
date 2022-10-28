@@ -106,12 +106,23 @@ public class PlayerSkillsPresenter : UIBehaviour
     {
         learnSkillBtn.interactable = canBeLearned;
         unlearnSkillBtn.interactable = canBeUnlearned;
-        unlearnAllSkillsBtn.interactable = canBeLearned;
+        unlearnAllSkillsBtn.interactable = true;
     }
 
     public void SetupPlayerPoints(int currentPoints)
     {
         playerSkillPointsLabel.text = currentPoints.ToString();
+    }
+
+    public void SetSkillView(PlayerSkillView skillView)
+    {
+        if (!_skillPresenters.TryGetValue(skillView.SkillId, out var skillPresenter))
+        {
+            Debug.LogError($"You just tried to update skill view for absent presenter ({skillView.SkillId})");
+            return;
+        }
+
+        skillPresenter.Setup(skillView);
     }
 
     private void OnLearnSkillBtnClick() => LearnSkillBtnClick?.Invoke();

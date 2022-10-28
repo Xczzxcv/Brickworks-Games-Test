@@ -12,6 +12,7 @@ public class PlayerSkillsController : MonoBehaviour
     private PlayerSkillsManager _skillsManager;
     private PlayerSkillsPresenter _playerSkillsPresenter;
     private PlayerSkillPresenter _currentSelectedSkill;
+    private ConfigsManager _configs;
 
     public void Init(RectTransform uiParent)
     {
@@ -21,9 +22,10 @@ public class PlayerSkillsController : MonoBehaviour
     public void Setup(PlayerManager player, ConfigsManager configs)
     {
         _skillsManager = player.SkillsManager;
+        _configs = configs;
 
         var skills = _skillsManager.GetSkills();
-        var playerSkillViews = GetPlayerSkillViews(skills, configs);
+        var playerSkillViews = GetPlayerSkillViews(skills);
         var playerSkillEdgeViews = GetPlayerSkillEdgeViews(skills);
         var playerSkillsView = new PlayerSkillsView
         {
@@ -34,9 +36,9 @@ public class PlayerSkillsController : MonoBehaviour
         };
         _playerSkillsPresenter = Instantiate(skillsPresenterPrefab, _uiParent);
         _playerSkillsPresenter.Init(playerSkillsView);
-
-
+        
         _skillsManager.SkillPointsUpdated += OnSkillPointsUpdated;
+        _skillsManager.SkillsUpdated += OnSkillsUpdated;
 
         _playerSkillsPresenter.SkillSelected += OnSkillSelected;
         _playerSkillsPresenter.LearnSkillBtnClick += OnLearnSkillBtnClick;
@@ -45,7 +47,20 @@ public class PlayerSkillsController : MonoBehaviour
         _playerSkillsPresenter.AddPlayerSkillPointsBtnClick += OnAddPlayerSkillPointsBtnClick;
     }
 
-    private List<PlayerSkillEdgeView> GetPlayerSkillEdgeViews(IEnumerable<IPlayerSkill> skills)
+    private List<PlayerSkillView> GetPlayerSkillViews(List<IPlayerSkill> skills)
+    {
+        var playerSkillViews = new List<PlayerSkillView>();
+        foreach (var playerSkill in skills)
+        {
+            var skillViewConfig = _configs.PlayerSkillViews[playerSkill.Id];
+            var playerSkillView = PlayerSkillView.BuildFromSkill(playerSkill, skillViewConfig);
+            playerSkillViews.Add(playerSkillView);
+        }
+
+        return playerSkillViews;
+    }
+
+    private List<PlayerSkillEdgeView> GetPlayerSkillEdgeViews(List<IPlayerSkill> skills)
     {
         var uniqueEdges = new HashSet<PlayerSkillEdgeView>();
         foreach (var skill in skills)
@@ -54,7 +69,7 @@ public class PlayerSkillsController : MonoBehaviour
             {
                 var skillEdge = new PlayerSkillEdgeView
                 {
-                    SrcSkillId = skill.BaseConfig.Id,
+                    SrcSkillId = skill.Id,
                     DestSkillId = neighbourSkillId
                 };
 
@@ -65,33 +80,40 @@ public class PlayerSkillsController : MonoBehaviour
         return uniqueEdges.ToList();
     }
 
-    private List<PlayerSkillView> GetPlayerSkillViews(IEnumerable<IPlayerSkill> skills, 
-        ConfigsManager configs)
-    {
-        var playerSkillViews = new List<PlayerSkillView>();
-        foreach (var playerSkill in skills)
-        {
-            var skillViewConfig = configs.PlayerSkillViews[playerSkill.BaseConfig.Id];
-            var playerSkillView = PlayerSkillView.BuildFromSkill(playerSkill, skillViewConfig);
-            playerSkillViews.Add(playerSkillView);
-        }
-
-        return playerSkillViews;
-    }
-
     private void OnSkillPointsUpdated()
     {
         _playerSkillsPresenter.SetupPlayerPoints(_skillsManager.SkillPoints);
+        UpdateSelectedSkillInfo();
+    }
+
+    private void OnSkillsUpdated(List<IPlayerSkill> updatedSkills)
+    {
+        foreach (var updatedSkill in updatedSkills)
+        {
+            var skillViewConfig = _configs.PlayerSkillViews[updatedSkill.Id];
+            var updatedSkillView = PlayerSkillView.BuildFromSkill(updatedSkill, skillViewConfig);
+            _playerSkillsPresenter.SetSkillView(updatedSkillView);
+        
+            if (_currentSelectedSkill.SkillView.SkillId == updatedSkill.Id)
+            {
+                UpdateSelectedSkillInfo();
+            }
+        }
     }
 
     private void OnSkillSelected(PlayerSkillPresenter skillPresenter)
     {
         _currentSelectedSkill = skillPresenter;
+        UpdateSelectedSkillInfo();
+    }
+
+    private void UpdateSelectedSkillInfo()
+    {
         _playerSkillsPresenter.SetupSkillSelectionView(new PlayerSkillsPresenter.SkillSelectionInfo
         {
-            SkillView = skillPresenter.SkillView,
-            CanBeLearned = _skillsManager.CanLearnSkill(skillPresenter.SkillView.SkillId),
-            CanBeUnlearned = _skillsManager.CanUnlearnSkill(skillPresenter.SkillView.SkillId),
+            SkillView = _currentSelectedSkill.SkillView,
+            CanBeLearned = _skillsManager.CanLearnSkill(_currentSelectedSkill.SkillView.SkillId),
+            CanBeUnlearned = _skillsManager.CanUnlearnSkill(_currentSelectedSkill.SkillView.SkillId),
         });
     }
 

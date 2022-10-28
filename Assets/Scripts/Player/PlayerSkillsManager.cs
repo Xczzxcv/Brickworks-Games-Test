@@ -11,10 +11,14 @@ public class PlayerSkillsManager
 {
     public int SkillPoints => _data.SkillPoints;
     public event Action SkillPointsUpdated;
+    public event Action<List<IPlayerSkill>> SkillsUpdated;
 
     private readonly Configs<PlayerSkillConfig> _playerSkillConfigs;
     private readonly Dictionary<string, IPlayerSkill> _skills = new Dictionary<string, IPlayerSkill>();
     private PlayerSkillsData _data;
+    
+    private readonly List<string> _skillIdsToUpdateCache = new List<string>();
+    private readonly List<IPlayerSkill> _updatedSkillsCache = new List<IPlayerSkill>();
 
     public PlayerSkillsManager(Configs<PlayerSkillConfig> playerSkillConfigs)
     {
@@ -71,6 +75,11 @@ public class PlayerSkillsManager
             return false;
         }
 
+        if (skill.IsLearned)
+        {
+            return false;
+        }
+
         var haveEnoughPoints = skill.BaseConfig.LearningCost > SkillPoints;
         if (haveEnoughPoints)
         {
@@ -111,6 +120,10 @@ public class PlayerSkillsManager
 
         skillData.IsLearned = true;
         DeductSkillPoints(skill.BaseConfig.LearningCost);
+        
+        _updatedSkillsCache.Clear();
+        _updatedSkillsCache.Add(skill);
+        SkillsUpdated?.Invoke(_updatedSkillsCache);
     }
     
     public bool CanUnlearnSkill(string skillId)
@@ -120,24 +133,29 @@ public class PlayerSkillsManager
             return false;
         }
 
-        if (skill.BaseConfig.Id == BasePlayerSkillConfig.ID)
+        if (!skill.IsLearned)
         {
             return false;
         }
 
-        foreach (var childSkillId in skill.BaseConfig.Neighbours)
+        if (skill.Id == BasePlayerSkillConfig.ID)
         {
-            if (!TryGetSkill(childSkillId, out var childSkill))
+            return false;
+        }
+
+        foreach (var neighbourSkillId in skill.BaseConfig.Neighbours)
+        {
+            if (!TryGetSkill(neighbourSkillId, out var neighbourSkill))
             {
                 continue;
             }
 
-            if (!childSkill.IsLearned)
+            if (!neighbourSkill.IsLearned)
             {
                 continue;
             }
 
-            if (!IsConnectedToParent(childSkillId, BasePlayerSkillConfig.ID, 
+            if (!AreSkillsConnected(neighbourSkillId, BasePlayerSkillConfig.ID, 
                     skillId))
             {
                 return false;
@@ -147,7 +165,7 @@ public class PlayerSkillsManager
         return true;
     }
 
-    public bool IsConnectedToParent(string skillId, string targetSkillId, string forbiddenSkillId = "")
+    private bool AreSkillsConnected(string skillId, string targetSkillId, string forbiddenSkillId = "")
     {
         var searchQueue = new Queue<string>();
         searchQueue.Enqueue(skillId);
@@ -189,18 +207,52 @@ public class PlayerSkillsManager
     {
         Debug.Assert(CanUnlearnSkill(skillId), $"Actually you can't unlearn {skillId}");
 
-        if (!TryGetSkill(skillId, out var skill))
+        _skillIdsToUpdateCache.Clear();
+        _skillIdsToUpdateCache.Add(skillId);
+        UnlearnInternal();
+    }
+
+    public void UnlearnAllSkills()
+    {
+        _skillIdsToUpdateCache.Clear();
+        foreach (var skillId in _data.Skills.Keys)
         {
-            return;
+            var noNeedToUnlearn = skillId == BasePlayerSkillConfig.ID;
+            if (noNeedToUnlearn)
+            {
+                continue;
+            }
+
+            _skillIdsToUpdateCache.Add(skillId);
         }
 
-        if (!TryGetSkillData(skillId, out var skillData))
+        UnlearnInternal();
+    }
+
+    private void UnlearnInternal()
+    {
+        _updatedSkillsCache.Clear();
+        var skillPointsReturnedTotal = 0;
+
+        foreach (var skillId in _skillIdsToUpdateCache)
         {
-            return;
+            if (!TryGetSkill(skillId, out var skill))
+            {
+                return;
+            }
+
+            if (!TryGetSkillData(skillId, out var skillData))
+            {
+                return;
+            }
+
+            skillData.IsLearned = false;
+            skillPointsReturnedTotal += skill.BaseConfig.LearningCost;
+            _updatedSkillsCache.Add(skill);
         }
 
-        skillData.IsLearned = false;
-        AddSkillPoints(skill.BaseConfig.LearningCost);
+        AddSkillPoints(skillPointsReturnedTotal);
+        SkillsUpdated?.Invoke(_updatedSkillsCache);
     }
 
     public void AddSkillPoints(int increaseAmount)
@@ -222,11 +274,6 @@ public class PlayerSkillsManager
     public List<IPlayerSkill> GetSkills()
     {
         return new List<IPlayerSkill>(_skills.Values);
-    }
-
-    public void UnlearnAllSkills()
-    {
-        throw new System.NotImplementedException();
     }
 }
 }

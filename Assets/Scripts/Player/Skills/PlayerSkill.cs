@@ -6,6 +6,7 @@ public abstract class PlayerSkill<TConfig, TData> : IPlayerSkill
     where TConfig : PlayerSkillConfig
     where TData : PlayerSkillData
 {
+    public string Id => Config.Id;
     public bool IsLearned => _skillData.IsLearned;
     public PlayerSkillConfig BaseConfig => Config;
 
@@ -22,7 +23,7 @@ public abstract class PlayerSkill<TConfig, TData> : IPlayerSkill
 
     public bool Equals(IPlayerSkill other)
     {
-        return other != null && BaseConfig.Id == other.BaseConfig.Id;
+        return other != null && Id == other.Id;
     }
 }
 }

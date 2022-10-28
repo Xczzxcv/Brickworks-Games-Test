@@ -15,7 +15,7 @@ public struct PlayerSkillView
     {
         return new PlayerSkillView
         {
-            SkillId = playerSkill.BaseConfig.Id,
+            SkillId = playerSkill.Id,
             Name =skillViewConfig.Name,
             Color = skillViewConfig.Color,
             LearningCost = playerSkill.BaseConfig.LearningCost,
