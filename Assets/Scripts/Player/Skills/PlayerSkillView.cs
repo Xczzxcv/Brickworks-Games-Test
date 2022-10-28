@@ -11,16 +11,16 @@ public struct PlayerSkillView
     public int LearningCost;
     public bool IsLearned;
 
-    public static PlayerSkillView BuildFromSkill(IPlayerSkill playerSkill)
+    public static PlayerSkillView BuildFromSkill(IPlayerSkill playerSkill, PlayerSkillViewConfig skillViewConfig)
     {
         return new PlayerSkillView
         {
             SkillId = playerSkill.BaseConfig.Id,
-            Name = "4325 asd",
-            Color = Color.green,
+            Name =skillViewConfig.Name,
+            Color = skillViewConfig.Color,
             LearningCost = playerSkill.BaseConfig.LearningCost,
             IsLearned = playerSkill.IsLearned,
-            ScreenPosition = Vector3.zero,
+            ScreenPosition = skillViewConfig.ScreenPosition,
         };
     }
 }

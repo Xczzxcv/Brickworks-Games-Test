@@ -17,15 +17,15 @@ MonoBehaviour:
   ViewConfig:
     SkillId: run
     Name: "\u0411\u0415\u0413"
-    Color: {r: 0, g: 0, b: 0, a: 1}
-    ScreenPosition: {x: -1, y: 1.5, z: 0}
+    Color: {r: 0.07826408, g: 0.7264151, b: 0, a: 1}
+    ScreenPosition: {x: -100, y: 150, z: 0}
   references:
     version: 1
     00000000:
-      type: {class: FlyPlayerSkillConfig, ns: Player.Skills, asm: Assembly-CSharp}
+      type: {class: RunPlayerSkillConfig, ns: Player.Skills, asm: Assembly-CSharp}
       data:
         Id: run
-        LearningCost: 4
+        LearningCost: 5
         Neighbours:
         - base
         - jump

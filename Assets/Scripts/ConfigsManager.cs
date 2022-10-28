@@ -23,33 +23,6 @@ public class ConfigsManager : MonoBehaviour
 
     public void Init()
     {
-        /*
-        PlayerSkills = new Configs<PlayerSkillConfig>()
-        {
-            { BasePlayerSkillConfig.ID, new BasePlayerSkillConfig
-            {
-                Id = BasePlayerSkillConfig.ID,
-                LearningCost = 0,
-                Neighbours = new[] {JumpPlayerSkillConfig.ID, RunPlayerSkillConfig.ID},
-            } },
-            { RunPlayerSkillConfig.ID, new RunPlayerSkillConfig {
-                Id = RunPlayerSkillConfig.ID,
-                LearningCost = 4,
-                Neighbours = new[] {BasePlayerSkillConfig.ID, JumpPlayerSkillConfig.ID},
-            } },
-            { JumpPlayerSkillConfig.ID, new JumpPlayerSkillConfig {
-                Id = JumpPlayerSkillConfig.ID,
-                LearningCost = 2,
-                Neighbours = new[] {RunPlayerSkillConfig.ID, FlyPlayerSkillConfig.ID},
-            } },
-            { FlyPlayerSkillConfig.ID, new FlyPlayerSkillConfig {
-                Id = FlyPlayerSkillConfig.ID,
-                LearningCost = 6,
-                Neighbours = new[] {JumpPlayerSkillConfig.ID, BasePlayerSkillConfig.ID},
-            } },
-        };
-        */
-        
         PlayerSkills = new Configs<PlayerSkillConfig>();
         foreach (var playerSkillConfig in skillConfigs)
         {
@@ -66,12 +39,12 @@ public class ConfigsManager : MonoBehaviour
     private void LinkSkillConfigs()
     {
         var path = $"Assets/{skillsDirPath}";
-        // var path = Path.Combine(Application.dataPath, skillsDirPath);
         var skillAssetPaths = Directory.GetFiles(path);
 
         skillConfigs = new List<PlayerSkillConfig>();
         skillViewConfigs = new List<PlayerSkillViewConfig>();
-        
+
+        var linkedCounter = 0;
         foreach (var skillAssetPath in skillAssetPaths)
         {
             var playerSkillAsset = AssetDatabase.LoadAssetAtPath<PlayerSkillScriptableO>(skillAssetPath);
@@ -82,6 +55,9 @@ public class ConfigsManager : MonoBehaviour
 
             skillConfigs.Add(playerSkillAsset.Config);
             skillViewConfigs.Add(playerSkillAsset.ViewConfig);
+            linkedCounter++;
         }
+        
+        Debug.Log($"{linkedCounter} skill assets were linked.");
     }
 }

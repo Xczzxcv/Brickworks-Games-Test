@@ -17,15 +17,15 @@ MonoBehaviour:
   ViewConfig:
     SkillId: jump
     Name: "\u041F\u0420\u042B\u0416\u041E\u041A"
-    Color: {r: 0, g: 0, b: 0, a: 1}
-    ScreenPosition: {x: 2, y: -1, z: 0}
+    Color: {r: 1, g: 0.56788814, b: 0, a: 1}
+    ScreenPosition: {x: 200, y: -100, z: 0}
   references:
     version: 1
     00000000:
-      type: {class: FlyPlayerSkillConfig, ns: Player.Skills, asm: Assembly-CSharp}
+      type: {class: JumpPlayerSkillConfig, ns: Player.Skills, asm: Assembly-CSharp}
       data:
         Id: jump
-        LearningCost: 2
+        LearningCost: 3
         Neighbours:
         - run
         - fly

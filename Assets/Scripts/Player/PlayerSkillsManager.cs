@@ -215,5 +215,10 @@ public class PlayerSkillsManager
     {
         _data.SkillPoints = newAmount;
     }
+
+    public IEnumerable<IPlayerSkill> GetSkills()
+    {
+        return _skills.Values;
+    }
 }
 }
