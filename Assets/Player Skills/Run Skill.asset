@@ -18,7 +18,7 @@ MonoBehaviour:
     SkillId: run
     Name: "\u0411\u0415\u0413"
     Color: {r: 0.07826408, g: 0.7264151, b: 0, a: 1}
-    ScreenPosition: {x: -100, y: 150, z: 0}
+    ScreenPosition: {x: -600, y: 200, z: 0}
   references:
     version: 1
     00000000:

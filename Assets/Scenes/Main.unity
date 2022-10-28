@@ -201,15 +201,15 @@ MonoBehaviour:
   - SkillId: fly
     Name: "\u041F\u041E\u041B\u0415\u0422"
     Color: {r: 0, g: 0.55425763, b: 1, a: 1}
-    ScreenPosition: {x: 1, y: 0, z: 0}
+    ScreenPosition: {x: 450, y: 300, z: 0}
   - SkillId: jump
     Name: "\u041F\u0420\u042B\u0416\u041E\u041A"
     Color: {r: 1, g: 0.56788814, b: 0, a: 1}
-    ScreenPosition: {x: 2, y: -1, z: 0}
+    ScreenPosition: {x: 450, y: -300, z: 0}
   - SkillId: run
     Name: "\u0411\u0415\u0413"
     Color: {r: 0.07826408, g: 0.7264151, b: 0, a: 1}
-    ScreenPosition: {x: -1, y: 1.5, z: 0}
+    ScreenPosition: {x: -450, y: 300, z: 0}
   references:
     version: 1
     00000000:
@@ -341,6 +341,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1542811575
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1542811576}
+  - component: {fileID: 1542811577}
+  m_Layer: 0
+  m_Name: PlayerSkillsController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1542811576
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1542811575}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1994436545}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1542811577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1542811575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cafed0da36384189aa1d9cae21322f80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillsPresenterPrefab: {fileID: 8831834267723288353, guid: 5f3a94191a8e60d4a95064062b4565ad, type: 3}
 --- !u!1 &1582613194
 GameObject:
   m_ObjectHideFlags: 0
@@ -583,7 +627,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a99ca42d80844e4ea9f089a2c2081eb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillsControllerPrefab: {fileID: 8831834267723288353, guid: 5f3a94191a8e60d4a95064062b4565ad, type: 3}
+  skillsController: {fileID: 1542811577}
   uiParent: {fileID: 358509625}
 --- !u!4 &1994436545
 Transform:
@@ -595,7 +639,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1542811576}
   m_Father: {fileID: 1844641235}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

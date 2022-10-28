@@ -1,5 +1,40 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2399875361772712939
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2386787154406739923}
+  m_Layer: 5
+  m_Name: Skill Edge Views
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2386787154406739923
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2399875361772712939}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8831834268339118354}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8831834266903919685
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,7 +251,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8831834268339118354}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -637,7 +672,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9098039, g: 0.84891707, b: 0.77788234, a: 1}
+  m_Color: {r: 0.675, g: 0.6284483, b: 0.5760776, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1083,7 +1118,7 @@ GameObject:
   - component: {fileID: 8831834267723288352}
   - component: {fileID: 8831834267723288353}
   m_Layer: 5
-  m_Name: Skills Controller
+  m_Name: Player Skills View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1121,9 +1156,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f32e8d4e10e245f8980ec3081503bbba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillControllerPrefab: {fileID: 6411227137832408126, guid: ed35f8a3e66fa664e9765ab1ef920b2a, type: 3}
+  skillPresenterPrefab: {fileID: 6411227137832408126, guid: ed35f8a3e66fa664e9765ab1ef920b2a, type: 3}
   skillViewsParent: {fileID: 8831834267128640840}
   skillViewsToggleGroup: {fileID: 8831834267128640841}
+  skillEdgePresenterPrefab: {fileID: 3936037047974767551, guid: 909e836a15bca0e49a094d15adf5fd0c, type: 3}
+  edgeViewsParent: {fileID: 2386787154406739923}
   skillLearnPriceLabel: {fileID: 8831834267449673299}
   learnSkillBtn: {fileID: 440821520607523038}
   unlearnSkillBtn: {fileID: 1029748420636865046}
@@ -1413,6 +1450,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8831834267256242412}
+  - {fileID: 2386787154406739923}
   - {fileID: 8831834267128640840}
   m_Father: {fileID: 8831834267457713399}
   m_RootOrder: 0
@@ -1652,11 +1690,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9bc109ff312b76a4289e49ef3600bda7, type: 3}
---- !u!224 &844175192376988098 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 8751510890496640723, guid: 9bc109ff312b76a4289e49ef3600bda7, type: 3}
-  m_PrefabInstance: {fileID: 8269875643203720977}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &440821520607523038 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8420214812792367055, guid: 9bc109ff312b76a4289e49ef3600bda7, type: 3}
@@ -1668,6 +1701,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &844175192376988098 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8751510890496640723, guid: 9bc109ff312b76a4289e49ef3600bda7, type: 3}
+  m_PrefabInstance: {fileID: 8269875643203720977}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8831834266954159577
 PrefabInstance:
   m_ObjectHideFlags: 0

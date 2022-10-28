@@ -18,7 +18,7 @@ MonoBehaviour:
     SkillId: fly
     Name: "\u041F\u041E\u041B\u0415\u0422"
     Color: {r: 0, g: 0.55425763, b: 1, a: 1}
-    ScreenPosition: {x: 100, y: 0, z: 0}
+    ScreenPosition: {x: 450, y: -300, z: 0}
   references:
     version: 1
     00000000:

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Data;
 using Factory;
 using Player.Skills;
@@ -9,6 +10,7 @@ namespace Player
 public class PlayerSkillsManager
 {
     public int SkillPoints => _data.SkillPoints;
+    public event Action SkillPointsUpdated;
 
     private readonly Configs<PlayerSkillConfig> _playerSkillConfigs;
     private readonly Dictionary<string, IPlayerSkill> _skills = new Dictionary<string, IPlayerSkill>();
@@ -214,11 +216,17 @@ public class PlayerSkillsManager
     private void UpdateSkillPoints(int newAmount)
     {
         _data.SkillPoints = newAmount;
+        SkillPointsUpdated?.Invoke();
     }
 
-    public IEnumerable<IPlayerSkill> GetSkills()
+    public List<IPlayerSkill> GetSkills()
     {
-        return _skills.Values;
+        return new List<IPlayerSkill>(_skills.Values);
+    }
+
+    public void UnlearnAllSkills()
+    {
+        throw new System.NotImplementedException();
     }
 }
 }

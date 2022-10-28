@@ -18,7 +18,7 @@ MonoBehaviour:
     SkillId: jump
     Name: "\u041F\u0420\u042B\u0416\u041E\u041A"
     Color: {r: 1, g: 0.56788814, b: 0, a: 1}
-    ScreenPosition: {x: 200, y: -100, z: 0}
+    ScreenPosition: {x: 450, y: 300, z: 0}
   references:
     version: 1
     00000000:

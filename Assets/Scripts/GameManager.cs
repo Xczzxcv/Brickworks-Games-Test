@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
         Player = new PlayerManager(Configs);
         Player.Init(DataManager.PlayerData);
 
+        UIManager.Init();
         UIManager.ShowPlayerSkills(Player, Configs);
     }
 }

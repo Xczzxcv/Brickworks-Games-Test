@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 6411227137832408126}
   - component: {fileID: 4460059490659398015}
   m_Layer: 5
-  m_Name: Skill Controller
+  m_Name: Player Skill View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -302,6 +302,7 @@ MonoBehaviour:
   nameLabel: {fileID: 447453427852155553}
   rectTransform: {fileID: 447453429263350906}
   toggle: {fileID: 4460059490659398015}
+  skillLearnedMark: {fileID: 1631087775064674559}
 --- !u!114 &4460059490659398015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,7 +368,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4875081782030128770
 RectTransform:
   m_ObjectHideFlags: 0
@@ -402,7 +403,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1631087775064674559}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
