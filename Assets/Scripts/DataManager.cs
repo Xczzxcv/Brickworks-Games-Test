@@ -8,6 +8,19 @@ public class DataManager
 
     public void Init()
     {
+        if (!TryLoadPlayerData())
+        {
+            InitPlayerData();
+        }
+    }
+
+    private bool TryLoadPlayerData()
+    {
+        return false;
+    }
+
+    private void InitPlayerData()
+    {
         PlayerData = new PlayerData
         {
             SkillsData = new PlayerSkillsData

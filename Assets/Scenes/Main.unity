@@ -188,28 +188,64 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillsDirPath: Player Skills
+  screenPosModifier: 150
   skillConfigs:
   - id: 0
   - id: 1
   - id: 2
   - id: 3
+  - id: 4
+  - id: 5
+  - id: 6
+  - id: 7
+  - id: 8
+  - id: 9
+  - id: 10
   skillViewConfigs:
   - SkillId: base
     Name: "\u0411\u0410\u0417\u0410"
-    Color: {r: 0, g: 0, b: 0, a: 1}
+    Color: {r: 0.4015127, g: 0.84313726, b: 0.21415687, a: 1}
     ScreenPosition: {x: 0, y: 0, z: 0}
-  - SkillId: fly
-    Name: "\u041F\u041E\u041B\u0415\u0422"
-    Color: {r: 0, g: 0.55425763, b: 1, a: 1}
-    ScreenPosition: {x: 450, y: -300, z: 0}
-  - SkillId: jump
-    Name: "\u041F\u0420\u042B\u0416\u041E\u041A"
-    Color: {r: 1, g: 0.56788814, b: 0, a: 1}
-    ScreenPosition: {x: 450, y: 300, z: 0}
-  - SkillId: run
-    Name: "\u0411\u0415\u0413"
-    Color: {r: 0.07826408, g: 0.7264151, b: 0, a: 1}
-    ScreenPosition: {x: -600, y: 200, z: 0}
+  - SkillId: some1
+    Name: 2
+    Color: {r: 0.18105882, g: 0.5884411, b: 0.9529412, a: 1}
+    ScreenPosition: {x: 150, y: -150, z: 0}
+  - SkillId: some2
+    Name: 3
+    Color: {r: 0.18105882, g: 0.5884411, b: 0.9529412, a: 1}
+    ScreenPosition: {x: 300, y: -300, z: 0}
+  - SkillId: some3
+    Name: 4
+    Color: {r: 0.18105882, g: 0.5884411, b: 0.9529412, a: 1}
+    ScreenPosition: {x: -150, y: -75, z: 0}
+  - SkillId: some4
+    Name: 5
+    Color: {r: 0.18105882, g: 0.5884411, b: 0.9529412, a: 1}
+    ScreenPosition: {x: -300, y: -150, z: 0}
+  - SkillId: some5
+    Name: 6
+    Color: {r: 0.18105882, g: 0.5884411, b: 0.9529412, a: 1}
+    ScreenPosition: {x: -150, y: -225, z: 0}
+  - SkillId: some6
+    Name: 7
+    Color: {r: 0.18105882, g: 0.5884411, b: 0.9529412, a: 1}
+    ScreenPosition: {x: -450, y: -300, z: 0}
+  - SkillId: some7
+    Name: 8
+    Color: {r: 0.18105882, g: 0.5884411, b: 0.9529412, a: 1}
+    ScreenPosition: {x: 75, y: 150, z: 0}
+  - SkillId: some8
+    Name: 9
+    Color: {r: 0.18105882, g: 0.5884411, b: 0.9529412, a: 1}
+    ScreenPosition: {x: 375, y: 75, z: 0}
+  - SkillId: some9
+    Name: 9
+    Color: {r: 0.18105882, g: 0.5884411, b: 0.9529412, a: 1}
+    ScreenPosition: {x: 375, y: 225, z: 0}
+  - SkillId: some
+    Name: 1
+    Color: {r: 0.18105882, g: 0.5884411, b: 0.9529412, a: 1}
+    ScreenPosition: {x: -150, y: 75, z: 0}
   references:
     version: 1
     00000000:
@@ -218,32 +254,88 @@ MonoBehaviour:
         Id: base
         LearningCost: 0
         Neighbours:
-        - run
-        - fly
+        - some
+        - some1
+        - some3
     00000001:
-      type: {class: FlyPlayerSkillConfig, ns: Player.Skills, asm: Assembly-CSharp}
+      type: {class: SomePlayerSkillConfig, ns: Player.Skills, asm: Assembly-CSharp}
       data:
-        Id: fly
-        LearningCost: 3
+        Id: some1
+        LearningCost: 1
         Neighbours:
         - base
-        - jump
+        - some2
     00000002:
-      type: {class: JumpPlayerSkillConfig, ns: Player.Skills, asm: Assembly-CSharp}
+      type: {class: SomePlayerSkillConfig, ns: Player.Skills, asm: Assembly-CSharp}
       data:
-        Id: jump
-        LearningCost: 3
+        Id: some2
+        LearningCost: 1
         Neighbours:
-        - run
-        - fly
+        - some1
     00000003:
-      type: {class: RunPlayerSkillConfig, ns: Player.Skills, asm: Assembly-CSharp}
+      type: {class: SomePlayerSkillConfig, ns: Player.Skills, asm: Assembly-CSharp}
       data:
-        Id: run
-        LearningCost: 5
+        Id: some3
+        LearningCost: 1
         Neighbours:
         - base
-        - jump
+        - some4
+        - some5
+    00000004:
+      type: {class: SomePlayerSkillConfig, ns: Player.Skills, asm: Assembly-CSharp}
+      data:
+        Id: some4
+        LearningCost: 1
+        Neighbours:
+        - some3
+        - some6
+    00000005:
+      type: {class: SomePlayerSkillConfig, ns: Player.Skills, asm: Assembly-CSharp}
+      data:
+        Id: some5
+        LearningCost: 1
+        Neighbours:
+        - some3
+        - some6
+    00000006:
+      type: {class: SomePlayerSkillConfig, ns: Player.Skills, asm: Assembly-CSharp}
+      data:
+        Id: some6
+        LearningCost: 1
+        Neighbours:
+        - some4
+        - some5
+    00000007:
+      type: {class: SomePlayerSkillConfig, ns: Player.Skills, asm: Assembly-CSharp}
+      data:
+        Id: some7
+        LearningCost: 1
+        Neighbours:
+        - base
+        - some9
+    00000008:
+      type: {class: SomePlayerSkillConfig, ns: Player.Skills, asm: Assembly-CSharp}
+      data:
+        Id: some8
+        LearningCost: 1
+        Neighbours:
+        - base
+        - some9
+    00000009:
+      type: {class: SomePlayerSkillConfig, ns: Player.Skills, asm: Assembly-CSharp}
+      data:
+        Id: some9
+        LearningCost: 1
+        Neighbours:
+        - some7
+        - some8
+    0000000A:
+      type: {class: SomePlayerSkillConfig, ns: Player.Skills, asm: Assembly-CSharp}
+      data:
+        Id: some
+        LearningCost: 1
+        Neighbours:
+        - base
 --- !u!4 &358585489
 Transform:
   m_ObjectHideFlags: 0

@@ -28,12 +28,12 @@ public class GameManager : MonoBehaviour
         // Player.SkillsManager.LearnSkill(JumpPlayerSkillConfig.ID);
     }
 
-    public void Init()
+    private void Init()
     {
+        Configs.Init();
+        
         DataManager = new DataManager();
         DataManager.Init();
-        
-        Configs.Init();
         
         Player = new PlayerManager(Configs);
         Player.Init(DataManager.PlayerData);

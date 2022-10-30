@@ -19,6 +19,7 @@ public class PlayerSkillsManager
     
     private readonly List<string> _skillIdsToUpdateCache = new List<string>();
     private readonly List<IPlayerSkill> _updatedSkillsCache = new List<IPlayerSkill>();
+    private readonly HashSet<string> _alreadyCheckedSkillIdsCached = new HashSet<string>();
 
     public PlayerSkillsManager(Configs<PlayerSkillConfig> playerSkillConfigs)
     {
@@ -170,11 +171,15 @@ public class PlayerSkillsManager
         var searchQueue = new Queue<string>();
         searchQueue.Enqueue(skillId);
 
+        _alreadyCheckedSkillIdsCached.Clear();
+
         while (searchQueue.Count > 0)
         {
             var skillIdToCheck = searchQueue.Dequeue();
 
-            if (skillIdToCheck == forbiddenSkillId)
+            var needToCheckSkillWithSuchId = skillIdToCheck != forbiddenSkillId 
+                                             && !_alreadyCheckedSkillIdsCached.Contains(skillIdToCheck);
+            if (!needToCheckSkillWithSuchId)
             {
                 continue;
             }
@@ -198,6 +203,8 @@ public class PlayerSkillsManager
             {
                 searchQueue.Enqueue(neighbourSkillId);
             }
+
+            _alreadyCheckedSkillIdsCached.Add(skillIdToCheck);
         }
 
         return false;
@@ -238,12 +245,17 @@ public class PlayerSkillsManager
         {
             if (!TryGetSkill(skillId, out var skill))
             {
-                return;
+                continue;
             }
 
             if (!TryGetSkillData(skillId, out var skillData))
             {
-                return;
+                continue;
+            }
+
+            if (!skillData.IsLearned)
+            {
+                continue;
             }
 
             skillData.IsLearned = false;

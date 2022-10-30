@@ -10,22 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90af37a3338f4ec1a2bc76aa64a6969e, type: 3}
-  m_Name: Jump Skill
+  m_Name: Some Skill 2
   m_EditorClassIdentifier: 
   Config:
     id: 0
   ViewConfig:
-    SkillId: jump
-    Name: "\u041F\u0420\u042B\u0416\u041E\u041A"
-    Color: {r: 1, g: 0.56788814, b: 0, a: 1}
-    ScreenPosition: {x: 450, y: 300, z: 0}
+    SkillId: some2
+    Name: 3
+    Color: {r: 0.18105882, g: 0.5884411, b: 0.9529412, a: 1}
+    ScreenPosition: {x: 2, y: -2, z: 0}
   references:
     version: 1
     00000000:
-      type: {class: JumpPlayerSkillConfig, ns: Player.Skills, asm: Assembly-CSharp}
+      type: {class: SomePlayerSkillConfig, ns: Player.Skills, asm: Assembly-CSharp}
       data:
-        Id: jump
-        LearningCost: 3
+        Id: some2
+        LearningCost: 1
         Neighbours:
-        - run
-        - fly
+        - some1

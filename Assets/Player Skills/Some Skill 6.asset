@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90af37a3338f4ec1a2bc76aa64a6969e, type: 3}
-  m_Name: Run Skill
+  m_Name: Some Skill 6
   m_EditorClassIdentifier: 
   Config:
     id: 0
   ViewConfig:
-    SkillId: run
-    Name: "\u0411\u0415\u0413"
-    Color: {r: 0.07826408, g: 0.7264151, b: 0, a: 1}
-    ScreenPosition: {x: -600, y: 200, z: 0}
+    SkillId: some6
+    Name: 7
+    Color: {r: 0.18105882, g: 0.5884411, b: 0.9529412, a: 1}
+    ScreenPosition: {x: -3, y: -2, z: 0}
   references:
     version: 1
     00000000:
-      type: {class: RunPlayerSkillConfig, ns: Player.Skills, asm: Assembly-CSharp}
+      type: {class: SomePlayerSkillConfig, ns: Player.Skills, asm: Assembly-CSharp}
       data:
-        Id: run
-        LearningCost: 5
+        Id: some6
+        LearningCost: 1
         Neighbours:
-        - base
-        - jump
+        - some4
+        - some5

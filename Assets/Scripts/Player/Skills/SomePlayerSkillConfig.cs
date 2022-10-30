@@ -12,5 +12,6 @@ public class SomePlayerSkillConfig : PlayerSkillConfig
     public const string ID7 = ID + "7";
     public const string ID8 = ID + "8";
     public const string ID9 = ID + "9";
+    public const string ID10 = ID + "10";
 }
 }

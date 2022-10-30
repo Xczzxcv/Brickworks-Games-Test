@@ -20,6 +20,7 @@ public class PlayerSkillPresenter : UIBehaviour
     public void Init(ToggleGroup parentToggleGroup)
     {
         toggle.group = parentToggleGroup;
+        toggle.onValueChanged.AddListener(OnToggleChanged);
     }
 
     public void Setup(PlayerSkillView skillView)
@@ -30,8 +31,6 @@ public class PlayerSkillPresenter : UIBehaviour
         background.color = SkillView.Color;
         nameLabel.text = SkillView.Name;
         skillLearnedMark.SetActive(SkillView.IsLearned);
-        
-        toggle.onValueChanged.AddListener(OnToggleChanged);
     }
 
     private void OnToggleChanged(bool newValue)

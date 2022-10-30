@@ -20,6 +20,7 @@ public static partial class DataFactory
         AddDataType<IPlayerSkill>(SomePlayerSkillConfig.ID7, typeof(SomePlayerSkill));
         AddDataType<IPlayerSkill>(SomePlayerSkillConfig.ID8, typeof(SomePlayerSkill));
         AddDataType<IPlayerSkill>(SomePlayerSkillConfig.ID9, typeof(SomePlayerSkill));
+        AddDataType<IPlayerSkill>(SomePlayerSkillConfig.ID10, typeof(SomePlayerSkill));
 
         AddDataType<PlayerSkillConfig>(BasePlayerSkillConfig.ID, typeof(BasePlayerSkillConfig));
         AddDataType<PlayerSkillConfig>(JumpPlayerSkillConfig.ID, typeof(JumpPlayerSkillConfig));
@@ -35,6 +36,7 @@ public static partial class DataFactory
         AddDataType<PlayerSkillConfig>(SomePlayerSkillConfig.ID7, typeof(SomePlayerSkillConfig));
         AddDataType<PlayerSkillConfig>(SomePlayerSkillConfig.ID8, typeof(SomePlayerSkillConfig));
         AddDataType<PlayerSkillConfig>(SomePlayerSkillConfig.ID9, typeof(SomePlayerSkillConfig));
+        AddDataType<PlayerSkillConfig>(SomePlayerSkillConfig.ID10, typeof(SomePlayerSkillConfig));
     }
 }
 }
