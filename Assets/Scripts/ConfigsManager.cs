@@ -57,6 +57,8 @@ public class ConfigsManager : MonoBehaviour
             skillViewConfigs.Add(playerSkillAsset.ViewConfig);
             linkedCounter++;
         }
+
+        EditorUtility.SetDirty(this);
         
         Debug.Log($"{linkedCounter} skill assets were linked.");
     }

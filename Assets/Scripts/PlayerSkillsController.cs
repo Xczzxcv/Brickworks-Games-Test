@@ -23,6 +23,16 @@ public class PlayerSkillsController : MonoBehaviour
     {
         _skillsManager = player.SkillsManager;
         _configs = configs;
+        _playerSkillsPresenter = Instantiate(skillsPresenterPrefab, _uiParent);
+
+        _skillsManager.SkillPointsUpdated += OnSkillPointsUpdated;
+        _skillsManager.SkillsUpdated += OnSkillsUpdated;
+
+        _playerSkillsPresenter.SkillSelected += OnSkillSelected;
+        _playerSkillsPresenter.LearnSkillBtnClick += OnLearnSkillBtnClick;
+        _playerSkillsPresenter.UnlearnSkillBtnClick += OnUnlearnSkillBtnClick;
+        _playerSkillsPresenter.UnlearnAllSkillsBtnClick += OnUnlearnAllSkillsBtnClick;
+        _playerSkillsPresenter.AddPlayerSkillPointsBtnClick += OnAddPlayerSkillPointsBtnClick;
 
         var skills = _skillsManager.GetSkills();
         var playerSkillViews = GetPlayerSkillViews(skills);
@@ -34,17 +44,7 @@ public class PlayerSkillsController : MonoBehaviour
             PlayerSkillPoints = _skillsManager.SkillPoints,
             SkillIdToSelect = BasePlayerSkillConfig.ID
         };
-        _playerSkillsPresenter = Instantiate(skillsPresenterPrefab, _uiParent);
         _playerSkillsPresenter.Init(playerSkillsView);
-        
-        _skillsManager.SkillPointsUpdated += OnSkillPointsUpdated;
-        _skillsManager.SkillsUpdated += OnSkillsUpdated;
-
-        _playerSkillsPresenter.SkillSelected += OnSkillSelected;
-        _playerSkillsPresenter.LearnSkillBtnClick += OnLearnSkillBtnClick;
-        _playerSkillsPresenter.UnlearnSkillBtnClick += OnUnlearnSkillBtnClick;
-        _playerSkillsPresenter.UnlearnAllSkillsBtnClick += OnUnlearnAllSkillsBtnClick;
-        _playerSkillsPresenter.AddPlayerSkillPointsBtnClick += OnAddPlayerSkillPointsBtnClick;
     }
 
     private List<PlayerSkillView> GetPlayerSkillViews(List<IPlayerSkill> skills)
