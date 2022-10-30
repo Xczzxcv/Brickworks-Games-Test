@@ -30,8 +30,8 @@ public class PlayerSkillsController : MonoBehaviour
 
         _playerSkillsPresenter.SkillSelected += OnSkillSelected;
         _playerSkillsPresenter.LearnSkillBtnClick += OnLearnSkillBtnClick;
-        _playerSkillsPresenter.UnlearnSkillBtnClick += OnUnlearnSkillBtnClick;
-        _playerSkillsPresenter.UnlearnAllSkillsBtnClick += OnUnlearnAllSkillsBtnClick;
+        _playerSkillsPresenter.ForgetSkillBtnClick += OnForgetSkillBtnClick;
+        _playerSkillsPresenter.ForgetAllSkillsBtnClick += OnForgetAllSkillsBtnClick;
         _playerSkillsPresenter.AddPlayerSkillPointsBtnClick += OnAddPlayerSkillPointsBtnClick;
 
         var skills = _skillsManager.GetSkills();
@@ -113,7 +113,7 @@ public class PlayerSkillsController : MonoBehaviour
         {
             SkillView = _currentSelectedSkill.SkillView,
             CanBeLearned = _skillsManager.CanLearnSkill(_currentSelectedSkill.SkillView.SkillId),
-            CanBeUnlearned = _skillsManager.CanUnlearnSkill(_currentSelectedSkill.SkillView.SkillId),
+            CanBeForgot = _skillsManager.CanForgetSkill(_currentSelectedSkill.SkillView.SkillId),
         });
     }
 
@@ -122,14 +122,14 @@ public class PlayerSkillsController : MonoBehaviour
         _skillsManager.LearnSkill(_currentSelectedSkill.SkillView.SkillId);
     }
 
-    private void OnUnlearnSkillBtnClick()
+    private void OnForgetSkillBtnClick()
     {
-        _skillsManager.UnlearnSkill(_currentSelectedSkill.SkillView.SkillId);
+        _skillsManager.ForgetSkill(_currentSelectedSkill.SkillView.SkillId);
     }
 
-    private void OnUnlearnAllSkillsBtnClick()
+    private void OnForgetAllSkillsBtnClick()
     {
-        _skillsManager.UnlearnAllSkills();
+        _skillsManager.ForgetAllSkills();
     }
 
     private void OnAddPlayerSkillPointsBtnClick()

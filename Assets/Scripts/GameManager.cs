@@ -22,9 +22,9 @@ public class GameManager : MonoBehaviour
         // Player.SkillsManager.LearnSkill(JumpPlayerSkillConfig.ID);
         // Player.SkillsManager.LearnSkill(FlyPlayerSkillConfig.ID);
         //
-        // Player.SkillsManager.UnlearnSkill(JumpPlayerSkillConfig.ID);
-        // Player.SkillsManager.UnlearnSkill(FlyPlayerSkillConfig.ID);
-        // Player.SkillsManager.UnlearnSkill(RunPlayerSkillConfig.ID);
+        // Player.SkillsManager.ForgetSkill(JumpPlayerSkillConfig.ID);
+        // Player.SkillsManager.ForgetSkill(FlyPlayerSkillConfig.ID);
+        // Player.SkillsManager.ForgetSkill(RunPlayerSkillConfig.ID);
         // Player.SkillsManager.LearnSkill(JumpPlayerSkillConfig.ID);
     }
 

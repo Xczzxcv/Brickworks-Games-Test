@@ -1163,8 +1163,8 @@ MonoBehaviour:
   edgeViewsParent: {fileID: 2386787154406739923}
   skillLearnPriceLabel: {fileID: 8831834267449673299}
   learnSkillBtn: {fileID: 440821520607523038}
-  unlearnSkillBtn: {fileID: 1029748420636865046}
-  unlearnAllSkillsBtn: {fileID: 1029748420779617240}
+  forgetSkillBtn: {fileID: 1029748420636865046}
+  forgetAllSkillsBtn: {fileID: 1029748420779617240}
   playerSkillPointsLabel: {fileID: 8831834267151510947}
   addPlayerSkillPointsBtn: {fileID: 8831834267830817333}
 --- !u!1 &8831834267830817335
@@ -1715,7 +1715,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1192996290622672641, guid: 9bc109ff312b76a4289e49ef3600bda7, type: 3}
       propertyPath: m_Name
-      value: Unlearn Btn Root
+      value: Forget Btn Root
       objectReference: {fileID: 0}
     - target: {fileID: 1698959720268882034, guid: 9bc109ff312b76a4289e49ef3600bda7, type: 3}
       propertyPath: m_text
@@ -1848,7 +1848,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1192996290622672641, guid: 9bc109ff312b76a4289e49ef3600bda7, type: 3}
       propertyPath: m_Name
-      value: Unlearn All Btn
+      value: Forget All Btn
       objectReference: {fileID: 0}
     - target: {fileID: 1698959720268882034, guid: 9bc109ff312b76a4289e49ef3600bda7, type: 3}
       propertyPath: m_text

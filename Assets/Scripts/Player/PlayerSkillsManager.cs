@@ -127,7 +127,7 @@ public class PlayerSkillsManager
         SkillsUpdated?.Invoke(_updatedSkillsCache);
     }
     
-    public bool CanUnlearnSkill(string skillId)
+    public bool CanForgetSkill(string skillId)
     {
         if (!TryGetSkill(skillId, out var skill))
         {
@@ -210,22 +210,22 @@ public class PlayerSkillsManager
         return false;
     }
 
-    public void UnlearnSkill(string skillId)
+    public void ForgetSkill(string skillId)
     {
-        Debug.Assert(CanUnlearnSkill(skillId), $"Actually you can't unlearn {skillId}");
+        Debug.Assert(CanForgetSkill(skillId), $"Actually you can't forget {skillId}");
 
         _skillIdsToUpdateCache.Clear();
         _skillIdsToUpdateCache.Add(skillId);
-        UnlearnInternal();
+        ForgetInternal();
     }
 
-    public void UnlearnAllSkills()
+    public void ForgetAllSkills()
     {
         _skillIdsToUpdateCache.Clear();
         foreach (var skillId in _data.Skills.Keys)
         {
-            var noNeedToUnlearn = skillId == BasePlayerSkillConfig.ID;
-            if (noNeedToUnlearn)
+            var noNeedToForget = skillId == BasePlayerSkillConfig.ID;
+            if (noNeedToForget)
             {
                 continue;
             }
@@ -233,10 +233,10 @@ public class PlayerSkillsManager
             _skillIdsToUpdateCache.Add(skillId);
         }
 
-        UnlearnInternal();
+        ForgetInternal();
     }
 
-    private void UnlearnInternal()
+    private void ForgetInternal()
     {
         _updatedSkillsCache.Clear();
         var skillPointsReturnedTotal = 0;

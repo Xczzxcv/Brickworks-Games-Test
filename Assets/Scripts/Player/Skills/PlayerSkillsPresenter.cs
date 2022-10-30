@@ -18,16 +18,16 @@ public class PlayerSkillsPresenter : UIBehaviour
     [Space]
     [SerializeField] private TextMeshProUGUI skillLearnPriceLabel;
     [SerializeField] private Button learnSkillBtn;
-    [SerializeField] private Button unlearnSkillBtn;
-    [SerializeField] private Button unlearnAllSkillsBtn;
+    [SerializeField] private Button forgetSkillBtn;
+    [SerializeField] private Button forgetAllSkillsBtn;
     [Space]
     [SerializeField] private TextMeshProUGUI playerSkillPointsLabel;
     [SerializeField] private Button addPlayerSkillPointsBtn;
 
     public event Action<PlayerSkillPresenter> SkillSelected;
     public event Action LearnSkillBtnClick;
-    public event Action UnlearnSkillBtnClick;
-    public event Action UnlearnAllSkillsBtnClick;
+    public event Action ForgetSkillBtnClick;
+    public event Action ForgetAllSkillsBtnClick;
     public event Action AddPlayerSkillPointsBtnClick;
 
     private PlayerSkillsView _view;
@@ -37,8 +37,8 @@ public class PlayerSkillsPresenter : UIBehaviour
     {
         addPlayerSkillPointsBtn.onClick.AddListener(OnAddPlayerSkillPointsBtnClick);
         learnSkillBtn.onClick.AddListener(OnLearnSkillBtnClick);
-        unlearnSkillBtn.onClick.AddListener(OnUnlearnSkillBtnClick);
-        unlearnAllSkillsBtn.onClick.AddListener(OnUnlearnAllSkillsBtnClick);
+        forgetSkillBtn.onClick.AddListener(OnForgetSkillBtnClick);
+        forgetAllSkillsBtn.onClick.AddListener(OnForgetAllSkillsBtnClick);
     }
 
     public void Init(PlayerSkillsView view)
@@ -87,14 +87,14 @@ public class PlayerSkillsPresenter : UIBehaviour
     public void SetupSkillSelectionView(SkillSelectionInfo selectionInfo)
     {
         SetupSkillPrice(selectionInfo.SkillView.LearningCost);
-        SetupSkillLearnButtons(selectionInfo.CanBeLearned, selectionInfo.CanBeUnlearned);
+        SetupSkillLearnButtons(selectionInfo.CanBeLearned, selectionInfo.CanBeForgot);
     }
 
     public struct SkillSelectionInfo
     {
         public PlayerSkillView SkillView;
         public bool CanBeLearned;
-        public bool CanBeUnlearned;
+        public bool CanBeForgot;
     }
 
     private void SetupSkillPrice(int learningCost)
@@ -102,11 +102,11 @@ public class PlayerSkillsPresenter : UIBehaviour
         skillLearnPriceLabel.text = learningCost.ToString();
     }
 
-    private void SetupSkillLearnButtons(bool canBeLearned, bool canBeUnlearned)
+    private void SetupSkillLearnButtons(bool canBeLearned, bool canBeForgot)
     {
         learnSkillBtn.interactable = canBeLearned;
-        unlearnSkillBtn.interactable = canBeUnlearned;
-        unlearnAllSkillsBtn.interactable = true;
+        forgetSkillBtn.interactable = canBeForgot;
+        forgetAllSkillsBtn.interactable = true;
     }
 
     public void SetupPlayerPoints(int currentPoints)
@@ -127,9 +127,9 @@ public class PlayerSkillsPresenter : UIBehaviour
 
     private void OnLearnSkillBtnClick() => LearnSkillBtnClick?.Invoke();
 
-    private void OnUnlearnSkillBtnClick() => UnlearnSkillBtnClick?.Invoke();
+    private void OnForgetSkillBtnClick() => ForgetSkillBtnClick?.Invoke();
 
-    private void OnUnlearnAllSkillsBtnClick() => UnlearnAllSkillsBtnClick?.Invoke();
+    private void OnForgetAllSkillsBtnClick() => ForgetAllSkillsBtnClick?.Invoke();
 
     private void OnAddPlayerSkillPointsBtnClick() => AddPlayerSkillPointsBtnClick?.Invoke();
 
@@ -137,8 +137,8 @@ public class PlayerSkillsPresenter : UIBehaviour
     {
         addPlayerSkillPointsBtn.onClick.RemoveListener(OnAddPlayerSkillPointsBtnClick);
         learnSkillBtn.onClick.RemoveListener(OnLearnSkillBtnClick);
-        unlearnSkillBtn.onClick.RemoveListener(OnUnlearnSkillBtnClick);
-        unlearnAllSkillsBtn.onClick.RemoveListener(OnUnlearnAllSkillsBtnClick);
+        forgetSkillBtn.onClick.RemoveListener(OnForgetSkillBtnClick);
+        forgetAllSkillsBtn.onClick.RemoveListener(OnForgetAllSkillsBtnClick);
     }
 }
 }
