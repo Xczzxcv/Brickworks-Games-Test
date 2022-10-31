@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Player.Skills
 {
 [Serializable]
-public class PlayerSkillViewConfig
+public struct PlayerSkillViewConfig
 {
     public string SkillId;
     public string Name;

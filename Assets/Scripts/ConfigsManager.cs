@@ -58,8 +58,11 @@ public class ConfigsManager : MonoBehaviour
             }
 
             skillConfigs.Add(playerSkillAsset.Config);
-            playerSkillAsset.ViewConfig.ScreenPosition *= screenPosModifier;
-            skillViewConfigs.Add(playerSkillAsset.ViewConfig);
+            
+            var viewConfig = playerSkillAsset.ViewConfig;
+            viewConfig.ScreenPosition *= screenPosModifier;
+            skillViewConfigs.Add(viewConfig);
+            
             linkedCounter++;
         }
 

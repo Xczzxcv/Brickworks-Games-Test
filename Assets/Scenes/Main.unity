@@ -606,7 +606,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b368d2b2583fc3418606cbabf866ccb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config: {fileID: 358585488}
+  configs: {fileID: 358585488}
   uiManager: {fileID: 1994436544}
 --- !u!4 &1844641235
 Transform:
